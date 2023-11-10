@@ -1,4 +1,4 @@
-/* Definições gerais para todos os elementos */
+/* Geral */
 * {
   padding: 0;
   margin: 0;
@@ -7,14 +7,12 @@
   color: #333;
 }
 
-/* Estilo para o corpo da página */
 body {
   background-image: url("../img/bg.jpg");
   background-position: center;
   background-size: cover;
 }
 
-/* Estilo para botões */
 button {
   background-color: #fdfdfd;
   color: #102f5e;
@@ -42,18 +40,16 @@ button i {
   font-weight: bold;
 }
 
-/* Estilo para inputs e selects */
 input,
 select {
   padding: 0.25rem 0.5rem;
 }
 
-/* Classe para esconder elementos */
 .hide {
   display: none;
 }
 
-/* Estilo para o contêiner da lista de tarefas */
+/* Todo Header */
 .todo-container {
   max-width: 450px;
   margin: 3rem auto 0;
@@ -62,14 +58,13 @@ select {
   border-radius: 15px;
 }
 
-/* Estilo para o cabeçalho do contêiner da lista de tarefas */
 .todo-container header {
   text-align: center;
   padding: 0 1rem 1rem;
   border-bottom: 1px solid #ccc;
 }
 
-/* Estilo para o formulário de adição de tarefas e formulário de edição */
+/* Todo Form */
 #todo-form,
 #edit-form {
   padding: 1rem;
@@ -82,7 +77,6 @@ select {
   font-weight: bold;
 }
 
-/* Estilo para os controles dentro do formulário */
 .form-control {
   display: flex;
 }
@@ -96,7 +90,7 @@ select {
   color: #444;
 }
 
-/* Estilo para a barra de ferramentas */
+/* Todo Toolbar */
 #toolbar {
   padding: 1rem;
   border-bottom: 1px solid #ccc;
@@ -107,7 +101,6 @@ select {
   margin-bottom: 0.5rem;
 }
 
-/* Estilo para a seção de busca na barra de ferramentas */
 #search {
   border-right: 1px solid #ddd;
   padding-right: 1rem;
@@ -126,7 +119,6 @@ select {
   margin-right: 0.3rem;
 }
 
-/* Estilo para a seção de filtro na barra de ferramentas */
 #filter {
   width: 35%;
   display: flex;
@@ -137,7 +129,7 @@ select {
   flex: 1;
 }
 
-/* Estilo para cada item da lista de tarefas */
+/* Todo List */
 .todo {
   display: flex;
   justify-content: space-around;
@@ -147,18 +139,15 @@ select {
   transition: 0.3s;
 }
 
-/* Estilo para o texto da tarefa na lista de tarefas */
 .todo h3 {
   flex: 1;
   font-size: 0.9rem;
 }
 
-/* Estilo para o botão na lista de tarefas */
 .todo button {
   margin-left: 0.4rem;
 }
 
-/* Estilo para tarefas marcadas como concluídas */
 .done {
   background: #395169;
 }
