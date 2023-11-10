@@ -1,29 +1,25 @@
-// Seleção de elementos HTML
-const todoForm = document.querySelector("#todo-form"); // Formulário de adição de tarefas
-const todoInput = document.querySelector("#todo-input"); // Campo de entrada de tarefas
-const todoList = document.querySelector("#todo-list"); // Lista de tarefas
-const editForm = document.querySelector("#edit-form"); // Formulário de edição
-const editInput = document.querySelector("#edit-input"); // Campo de entrada de edição
-const cancelEditBtn = document.querySelector("#cancel-edit-btn"); // Botão de cancelar edição
-const searchInput = document.querySelector("#search-input"); // Campo de pesquisa
-const eraseBtn = document.querySelector("#erase-button"); // Botão de limpar pesquisa
-const filterBtn = document.querySelector("#filter-select"); // Seletor de filtro
+// Seleção de elementos
+const todoForm = document.querySelector("#todo-form");
+const todoInput = document.querySelector("#todo-input");
+const todoList = document.querySelector("#todo-list");
+const editForm = document.querySelector("#edit-form");
+const editInput = document.querySelector("#edit-input");
+const cancelEditBtn = document.querySelector("#cancel-edit-btn");
+const searchInput = document.querySelector("#search-input");
+const eraseBtn = document.querySelector("#erase-button");
+const filterBtn = document.querySelector("#filter-select");
 
-let oldInputValue; // Variável para armazenar o valor anterior do campo de entrada de edição
+let oldInputValue;
 
 // Funções
-// Função para salvar uma nova tarefa
 const saveTodo = (text, done = 0, save = 1) => {
-  // Cria um elemento <div> para representar a tarefa
   const todo = document.createElement("div");
   todo.classList.add("todo");
 
-  // Cria um título <h3> com o texto da tarefa
   const todoTitle = document.createElement("h3");
   todoTitle.innerText = text;
   todo.appendChild(todoTitle);
 
-  // Cria botões para marcar como concluído, editar e excluir a tarefa
   const doneBtn = document.createElement("button");
   doneBtn.classList.add("finish-todo");
   doneBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -39,28 +35,26 @@ const saveTodo = (text, done = 0, save = 1) => {
   deleteBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
   todo.appendChild(deleteBtn);
 
-  // Se a tarefa estiver concluída, adiciona a classe "done"
+  // Utilizando dados da localStorage
   if (done) {
     todo.classList.add("done");
   }
-  
-  // Salva a tarefa na lista e no armazenamento local (localStorage)
+
   if (save) {
     saveTodoLocalStorage({ text, done: 0 });
   }
 
-  todoList.appendChild(todo); // Adiciona a tarefa à lista
-  todoInput.value = ""; // Limpa o campo de entrada de tarefa
+  todoList.appendChild(todo);
+
+  todoInput.value = "";
 };
-//Funções
-// Função para alternar entre formulários de adição e edição
+
 const toggleForms = () => {
   editForm.classList.toggle("hide");
   todoForm.classList.toggle("hide");
   todoList.classList.toggle("hide");
 };
 
-// Função para atualizar o texto de uma tarefa
 const updateTodo = (text) => {
   const todos = document.querySelectorAll(".todo");
 
@@ -70,13 +64,12 @@ const updateTodo = (text) => {
     if (todoTitle.innerText === oldInputValue) {
       todoTitle.innerText = text;
 
-      // Atualiza o armazenamento local (localStorage)
+      // Utilizando dados da localStorage
       updateTodoLocalStorage(oldInputValue, text);
     }
   });
 };
 
-// Função para filtrar tarefas com base em uma consulta de pesquisa
 const getSearchedTodos = (search) => {
   const todos = document.querySelectorAll(".todo");
 
@@ -85,19 +78,21 @@ const getSearchedTodos = (search) => {
 
     todo.style.display = "flex";
 
+    console.log(todoTitle);
+
     if (!todoTitle.includes(search)) {
       todo.style.display = "none";
     }
   });
 };
 
-// Função para filtrar tarefas com base em um filtro selecionado
 const filterTodos = (filterValue) => {
   const todos = document.querySelectorAll(".todo");
 
   switch (filterValue) {
     case "all":
       todos.forEach((todo) => (todo.style.display = "flex"));
+
       break;
 
     case "done":
@@ -106,6 +101,7 @@ const filterTodos = (filterValue) => {
           ? (todo.style.display = "flex")
           : (todo.style.display = "none")
       );
+
       break;
 
     case "todo":
@@ -114,6 +110,7 @@ const filterTodos = (filterValue) => {
           ? (todo.style.display = "flex")
           : (todo.style.display = "none")
       );
+
       break;
 
     default:
@@ -132,7 +129,6 @@ todoForm.addEventListener("submit", (e) => {
   }
 });
 
-// Evento de clique na página para interagir com tarefas
 document.addEventListener("click", (e) => {
   const targetEl = e.target;
   const parentEl = targetEl.closest("div");
@@ -145,14 +141,13 @@ document.addEventListener("click", (e) => {
   if (targetEl.classList.contains("finish-todo")) {
     parentEl.classList.toggle("done");
 
-    // Atualiza o status da tarefa no armazenamento local (localStorage)
     updateTodoStatusLocalStorage(todoTitle);
   }
 
   if (targetEl.classList.contains("remove-todo")) {
     parentEl.remove();
 
-    // Remove a tarefa do armazenamento local (localStorage)
+    // Utilizando dados da localStorage
     removeTodoLocalStorage(todoTitle);
   }
 
@@ -192,7 +187,6 @@ eraseBtn.addEventListener("click", (e) => {
 
   searchInput.value = "";
 
-  // Dispara o evento "keyup" no campo de pesquisa para atualizar os resultados
   searchInput.dispatchEvent(new Event("keyup"));
 });
 
@@ -202,15 +196,13 @@ filterBtn.addEventListener("change", (e) => {
   filterTodos(filterValue);
 });
 
-// Armazenamento local
-// Função para obter tarefas do armazenamento local (localStorage)
+// Local Storage
 const getTodosLocalStorage = () => {
   const todos = JSON.parse(localStorage.getItem("todos")) || [];
 
   return todos;
 };
 
-// Função para carregar tarefas do armazenamento local (localStorage) ao iniciar
 const loadTodos = () => {
   const todos = getTodosLocalStorage();
 
@@ -219,5 +211,40 @@ const loadTodos = () => {
   });
 };
 
-// Função para salvar uma tarefa no armazenamento local (localStorage)
-const saveTodoLocalStorage = (todo)
+const saveTodoLocalStorage = (todo) => {
+  const todos = getTodosLocalStorage();
+
+  todos.push(todo);
+
+  localStorage.setItem("todos", JSON.stringify(todos));
+};
+
+const removeTodoLocalStorage = (todoText) => {
+  const todos = getTodosLocalStorage();
+
+  const filteredTodos = todos.filter((todo) => todo.text != todoText);
+
+  localStorage.setItem("todos", JSON.stringify(filteredTodos));
+};
+
+const updateTodoStatusLocalStorage = (todoText) => {
+  const todos = getTodosLocalStorage();
+
+  todos.map((todo) =>
+    todo.text === todoText ? (todo.done = !todo.done) : null
+  );
+
+  localStorage.setItem("todos", JSON.stringify(todos));
+};
+
+const updateTodoLocalStorage = (todoOldText, todoNewText) => {
+  const todos = getTodosLocalStorage();
+
+  todos.map((todo) =>
+    todo.text === todoOldText ? (todo.text = todoNewText) : null
+  );
+
+  localStorage.setItem("todos", JSON.stringify(todos));
+};
+
+loadTodos();
