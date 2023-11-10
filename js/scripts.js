@@ -43,7 +43,7 @@ const saveTodo = (text, done = 0, save = 1) => {
   if (done) {
     todo.classList.add("done");
   }
-
+  
   // Salva a tarefa na lista e no armazenamento local (localStorage)
   if (save) {
     saveTodoLocalStorage({ text, done: 0 });
@@ -52,7 +52,7 @@ const saveTodo = (text, done = 0, save = 1) => {
   todoList.appendChild(todo); // Adiciona a tarefa à lista
   todoInput.value = ""; // Limpa o campo de entrada de tarefa
 };
-
+//Funções
 // Função para alternar entre formulários de adição e edição
 const toggleForms = () => {
   editForm.classList.toggle("hide");
